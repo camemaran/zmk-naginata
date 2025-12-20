@@ -3,6 +3,7 @@
 #include <drivers/behavior.h>
 #include <zephyr/logging/log.h>
 #include <zephyr/settings/settings.h>
+#include <zephyr/random/random.h>
 
 #include <zmk/event_manager.h>
 #include <zmk/events/keycode_state_changed.h>
@@ -13,6 +14,67 @@
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 int64_t timestamp;
+
+// ============================================================================
+// Awake機能（F20キーでトグル、ランダム間隔で左Shiftを送信）
+// ============================================================================
+static bool awake_active = false;
+static struct k_timer awake_timer;
+static struct k_work awake_work;
+
+// Awakeタイマーのワークハンドラ（左Shiftをタップ）
+static void awake_work_handler(struct k_work *work) {
+    if (!awake_active) {
+        return;
+    }
+    
+    // 0〜10秒のランダム間隔を生成
+    uint32_t random_ms = sys_rand32_get() % 10001; // 0〜10000ms
+    
+    // 3秒（3000ms）より大きい場合のみ左Shiftをタップ
+    if (random_ms > 3000) {
+        raise_zmk_keycode_state_changed_from_encoded(LEFT_SHIFT, true, k_uptime_get());
+        raise_zmk_keycode_state_changed_from_encoded(LEFT_SHIFT, false, k_uptime_get());
+    }
+    
+    // 次のタイマーをスケジュール（random_ms秒後）
+    if (awake_active) {
+        k_timer_start(&awake_timer, K_MSEC(random_ms), K_NO_WAIT);
+    }
+}
+
+// タイマー満了時のコールバック（ワークキューにサブミット）
+static void awake_timer_expiry(struct k_timer *timer) {
+    k_work_submit(&awake_work);
+}
+
+// Awake機能のトグル
+void awake_toggle(void) {
+    awake_active = !awake_active;
+    
+    if (awake_active) {
+        // 最初のランダム間隔を生成してタイマー開始
+        uint32_t random_ms = sys_rand32_get() % 10001; // 0〜10000ms
+        k_timer_start(&awake_timer, K_MSEC(random_ms), K_NO_WAIT);
+    } else {
+        // タイマー停止
+        k_timer_stop(&awake_timer);
+    }
+}
+
+// Awake機能がアクティブかどうかを返す
+bool awake_is_active(void) {
+    return awake_active;
+}
+
+// Awake機能の初期化（システム起動時に呼ばれる）
+static int awake_init(void) {
+    k_timer_init(&awake_timer, awake_timer_expiry, NULL);
+    k_work_init(&awake_work, awake_work_handler);
+    return 0;
+}
+
+SYS_INIT(awake_init, APPLICATION, CONFIG_APPLICATION_INIT_PRIORITY);
 
 // グローバル設定変数
 user_config_t naginata_config = {
