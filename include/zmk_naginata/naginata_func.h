@@ -119,5 +119,6 @@ void ng_ctrl_shift_bracket_right(void);
 void ng_alt_shift_down(void);
 void ng_ctrl_shift_k(void);
 
-// Awake機能（F20キーでトグル）
-void awake_toggle(void);
+// Awake機能（F20キーでOn、F21キーでOff）
+void awake_on(void);
+void awake_off(void);

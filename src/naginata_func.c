@@ -48,15 +48,20 @@ static void awake_timer_expiry(struct k_timer *timer) {
     k_work_submit(&awake_work);
 }
 
-// Awake機能のトグル
-void awake_toggle(void) {
-    awake_active = !awake_active;
-    
-    if (awake_active) {
+// Awake機能をOnにする
+void awake_on(void) {
+    if (!awake_active) {
+        awake_active = true;
         // 最初のランダム間隔を生成してタイマー開始
         uint32_t random_ms = sys_rand32_get() % 10001; // 0〜10000ms
         k_timer_start(&awake_timer, K_MSEC(random_ms), K_NO_WAIT);
-    } else {
+    }
+}
+
+// Awake機能をOffにする
+void awake_off(void) {
+    if (awake_active) {
+        awake_active = false;
         // タイマー停止
         k_timer_stop(&awake_timer);
     }

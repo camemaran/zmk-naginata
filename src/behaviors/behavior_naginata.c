@@ -913,7 +913,7 @@ static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,
                                      struct zmk_behavior_binding_event event) {
     LOG_DBG("position %d keycode 0x%02X", event.position, binding->param1);
 
-    // F15..F20 設定切り替え
+    // F15..F21 設定切り替え
     switch (binding->param1) {
         case F15:
             naginata_config.os = NG_WINDOWS;
@@ -936,7 +936,10 @@ static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,
             naginata_config_save();
             return ZMK_BEHAVIOR_OPAQUE;
         case F20:
-            awake_toggle();
+            awake_on();
+            return ZMK_BEHAVIOR_OPAQUE;
+        case F21:
+            awake_off();
             return ZMK_BEHAVIOR_OPAQUE;
     }
 
