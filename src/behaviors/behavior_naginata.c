@@ -940,11 +940,6 @@ static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,
             return ZMK_BEHAVIOR_OPAQUE;
     }
 
-    // Awake機能がアクティブな場合、F20以外のキー入力をブロック
-    if (awake_is_active()) {
-        return ZMK_BEHAVIOR_OPAQUE;
-    }
-
     timestamp = event.timestamp;
 
     // OS別: macOS のときは LCTRL と LGUI を入れ替える（&ng で直接送出）

@@ -62,11 +62,6 @@ void awake_toggle(void) {
     }
 }
 
-// Awake機能がアクティブかどうかを返す
-bool awake_is_active(void) {
-    return awake_active;
-}
-
 // Awake機能の初期化（システム起動時に呼ばれる）
 static int awake_init(void) {
     k_timer_init(&awake_timer, awake_timer_expiry, NULL);

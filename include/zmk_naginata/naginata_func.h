@@ -121,4 +121,3 @@ void ng_ctrl_shift_k(void);
 
 // Awake機能（F20キーでトグル）
 void awake_toggle(void);
-bool awake_is_active(void);
