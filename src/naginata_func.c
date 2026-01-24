@@ -488,24 +488,24 @@ void ngh_MCB() { // 「ぬ35」を用語辞書の「読み方」に登録
     register_nu_number(35);
 }
 
-void ngh_CVY() { // 英字変換
-    ng_eiji();
+void ngh_CVY() { // Alt + s
+    tap_key(LA(S));
 }
 
-void ngh_CVU() { // ひらがな
-    ng_hiragana();
+void ngh_CVU() { // Alt + l
+    tap_key(LA(L));
 }
 
-void ngh_CVI() { // カタカナ
-    ng_katakana();
+void ngh_CVI() { // Alt + q
+    tap_key(LA(Q));
 }
 
-void ngh_CVO() { // 半角変換
-    ng_hankaku();
+void ngh_CVO() { // Alt + shift + q
+    tap_key(LS(LA(Q)));
 }
 
-void ngh_CVP() { // 全角変換
-    ng_zenkaku();
+void ngh_CVP() { // Alt + shift + f
+    tap_key(LS(LA(F)));
 }
 
 void ngh_CVH() { // F12
