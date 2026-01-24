@@ -349,8 +349,8 @@ void ngh_JKZ() { // ぬ4 《》を「ぬ4」に登録
     register_nu_number(4);
 }
 
-void ngh_JKX() { // F2
-    tap_key(F2);
+void ngh_JKX() { // F10
+    tap_key(F10);
 }
 
 void ngh_JKC() { // ！{改行}
