@@ -285,22 +285,18 @@ static void register_nu_number(int number) {
     tap_key(ENTER);
 }
 
-// void ng_T() { ng_left(1); }
-
-// void ng_Y() { ng_right(1); }
-
-// void ng_ST() {
-//     raise_zmk_keycode_state_changed_from_encoded(LSHIFT, true, timestamp);
-//     ng_left(1);
-//     raise_zmk_keycode_state_changed_from_encoded(LSHIFT, false, timestamp);
-// }
-
-// void ng_SY() {
-//     raise_zmk_keycode_state_changed_from_encoded(LSHIFT, true, timestamp);
-//     ng_right(1);
-//     raise_zmk_keycode_state_changed_from_encoded(LSHIFT, false, timestamp);
-// }
-
+void ng_T() { ng_left(1); }
+void ng_Y() { ng_right(1); }
+void ng_ST() {
+    raise_zmk_keycode_state_changed_from_encoded(LSHIFT, true, timestamp);
+    ng_left(1);
+    raise_zmk_keycode_state_changed_from_encoded(LSHIFT, false, timestamp);
+}
+void ng_SY() {
+    raise_zmk_keycode_state_changed_from_encoded(LSHIFT, true, timestamp);
+    ng_right(1);
+    raise_zmk_keycode_state_changed_from_encoded(LSHIFT, false, timestamp);
+}
 void ngh_JKQ() { // ぬ3 【】を「ぬ3」に登録
     register_nu_number(3);
 }
