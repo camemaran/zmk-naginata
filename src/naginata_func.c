@@ -285,6 +285,8 @@ static void register_nu_number(int number) {
     tap_key(ENTER);
 }
 
+void ng_T() { ng_left(1); }
+void ng_Y() { ng_right(1); }
 void ng_ST() {
     tap_key(LS(LEFT));
 }
