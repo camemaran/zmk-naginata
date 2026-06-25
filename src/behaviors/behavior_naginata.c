@@ -605,7 +605,6 @@ bool naginata_press(struct zmk_behavior_binding *binding, struct zmk_behavior_bi
     case ENTER:
     case DOT:
     case COMMA:
-    case SLASH:
     case MINUS:
         n_pressed_keys++;
         pressed_keys |= ng_key[keycode - A]; // キーの重ね合わせ
@@ -697,7 +696,6 @@ bool naginata_release(struct zmk_behavior_binding *binding,
     case ENTER:
     case DOT:
     case COMMA:
-    case SLASH:
     case MINUS:
         if (n_pressed_keys > 0)
             n_pressed_keys--;
