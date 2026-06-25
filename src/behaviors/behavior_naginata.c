@@ -171,7 +171,6 @@ static inline bool is_ng_handled_keycode(uint32_t kc) {
     case ENTER:
     case DOT:
     case COMMA:
-    case SLASH:
     case MINUS:
     case HOME:
     case END:
